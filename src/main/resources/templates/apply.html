@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Apply for Jobs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f4f6f8;
+            margin: 0;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h2 {
+            color: #333;
+            margin: 0;
+        }
+
+        .home-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .home-btn:hover {
+            background: #0056b3;
+        }
+
+        #successMsg {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+
+        .job-card {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .job-card h3 {
+            margin-top: 0;
+            color: #222;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .apply-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>Open Job Positions</h2>
+    <a href="/" class="home-btn">Back to Home</a>
+</header>
+
+<!-- Success Message (if submitted) -->
+<div id="successMsg" th:if="${submitted}">
+    Your application has been submitted successfully! Our HR team will contact you if your qualifications match our requirements.
+</div>
+
+<!-- Job Listings -->
+<div th:each="job : ${jobs}" class="job-card">
+    <h3 th:text="${job.title}">Job Title</h3>
+    <p><strong>Description:</strong> <span th:text="${job.description}">Job description here</span></p>
+    <p><strong>Requirements:</strong> <span th:text="${job.requirement}">Job requirements here</span></p>
+    <p><strong>Salary:</strong> ₹<span th:text="${job.salary}">50000</span></p>
+    <a th:href="@{'/apply-form'(jobTitle=${job.title})}" class="apply-btn">Apply</a>
+</div>
+
+<!-- Auto-hide Message -->
+<script>
+    setTimeout(() => {
+        const msg = document.getElementById('successMsg');
+        if (msg) {
+            msg.style.display = 'none';
+        }
+    }, 10000); // 10 seconds
+</script>
+
+</body>
+</html>

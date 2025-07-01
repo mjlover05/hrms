@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Employees</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+        }
+
+        header {
+            background-color: #004d99;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .container {
+            margin: 30px auto;
+            max-width: 1200px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .container h3 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #cccccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #e6f0ff;
+        }
+
+        .form-section {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            background-color: #004d99;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .btn.delete {
+            background-color: #cc0000;
+        }
+
+        .btn.update {
+            background-color: #006600;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        #showFormBtn {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function toggleForm() {
+            const formSection = document.getElementById("formSection");
+            formSection.style.display = formSection.style.display === "none" ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+
+<header>
+    <h2>HR Portal - Manage Employees</h2>
+    <form th:action="@{/logout}" method="post">
+        <button class="logout-btn" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container">
+    <h3>Employee List</h3>
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Email</th>-->
+<!--            <th>Password</th>-->
+<!--            <th>Designation</th>-->
+<!--            <th>Actions</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="employee : ${employees}">-->
+<!--            <td th:text="${employee.id}"></td>-->
+<!--            <td th:text="${employee.name}"></td>-->
+<!--            <td th:text="${employee.email}"></td>-->
+<!--            <td th:text="${employee.user.password}"></td>-->
+<!--            <td th:text="${employee.designation}"></td>-->
+<!--            <td>-->
+<!--&lt;!&ndash;                <a th:href="@{'/hr/edit-employee/' + ${employee.id}}" class="btn update">Edit</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                <a th:href="@{'/hr/delete-employee/' + ${employee.id}}" class="btn delete">Delete</a>&ndash;&gt;-->
+<!--                &lt;!&ndash; Delete button &ndash;&gt;-->
+<!--                <a th:href="@{/hr/delete-employee/{id}(id=${employee.id})}" class="btn delete">Delete</a>-->
+
+<!--                -->
+<!--                <a th:href="@{/hr/edit-employee/{id}(id=${employee.id})}" class="btn update">Edit</a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Previous Company</th>
+            <th>Designation</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.age}"></td>
+            <td th:text="${employee.address}"></td>
+            <td th:text="${employee.previousCompany}"></td>
+            <td th:text="${employee.designation}"></td>
+            <td>
+                <!-- Delete button -->
+                <a th:href="@{/hr/delete-employee/{id}(id=${employee.id})}" class="btn delete">Delete</a>
+
+                <!-- Edit button -->
+                <a th:href="@{/hr/edit-employee/{id}(id=${employee.id})}" class="btn update">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <button id="showFormBtn" class="btn" onclick="toggleForm()">Add Employee</button>
+
+    <div class="form-section" id="formSection">
+        <h3>Add New Employee</h3>
+        <form th:action="@{/hr/add-employee}" method="post">
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="number" name="age" required>
+            </div>
+            <div class="form-group">
+                <label>Designation:</label>
+                <input type="text" name="designation" required>
+            </div>
+            <div class="form-group">
+                <label>Previous Company:</label>
+                <input type="text" name="previousCompany">
+            </div>
+            <div class="form-group">
+                <label>Address:</label>
+                <textarea name="address" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Add Employee</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

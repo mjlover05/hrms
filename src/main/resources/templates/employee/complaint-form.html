@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Raise Complaint</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background-color: #004d99;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #003366;
+        }
+
+        .success {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Raise a Complaint</h2>
+
+    <div class="success" th:if="${param.success}">
+        Complaint submitted successfully!
+    </div>
+
+    <form th:action="@{/employee/complaint}" method="post" th:object="${complaint}">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" th:field="*{subject}" required />
+
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}" rows="6" required></textarea>
+
+        <button type="submit" class="btn">Submit Complaint</button>
+    </form>
+</div>
+
+</body>
+</html>

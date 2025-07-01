@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #006699;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background-color: #cc0000;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #e6f0ff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            background-color: #cce0ff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #003366;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Employee Dashboard</h1>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+
+</header>
+
+<div class="container">
+    <h2>Welcome, Employee</h2>
+    <div class="grid">
+
+        <div class="card">
+            <a th:href="@{/employee/profile}">View Profile</a>
+        </div>
+
+        <div class="card">
+            <a th:href="@{/employee/notices}">View Notices</a>
+        </div>
+
+        <div class="card">
+            <a th:href="@{/employee/salary}">View Salary Slip</a>
+        </div>
+
+        <div class="card">
+            <a th:href="@{/employee/complaint}">Raise Complaint</a>
+        </div>
+
+        <div class="card">
+            <a th:href="@{/employee/leaves}">Request Leave</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
